@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <h2>Booking History</h2>
+
+    {% for appt in appointments %}
+        <div class="card">
+            <p><strong>Doctor:</strong> {{ appt.doctor }}</p>
+            <p><strong>Date:</strong> {{ appt.date }} {{ appt.time }}</p>
+            <p><strong>Status:</strong> {{ appt.status }}</p>
+
+            {% if appt.status != 'cancelled' %}
+                <a href="/cancel/{{ appt.id }}">
+                    <button>Cancel</button>
+                </a>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

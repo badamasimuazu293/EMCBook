@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <h2>Search Doctor</h2>
+
+    <form method="GET">
+        <input type="text" name="specialty" placeholder="Search by specialty">
+        <button>Search</button>
+    </form>
+</div>
+
+{% for doctor in doctors %}
+<div class="card">
+    <h3>{{ doctor.user.username }}</h3>
+    <p>{{ doctor.specialty }} - {{ doctor.department }}</p>
+    <a href="/book/{{ doctor.id }}"><button>Book</button></a>
+</div>
+{% endfor %}
+{% endblock %}

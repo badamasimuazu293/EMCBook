@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <h2>WELCOME TO EMC HOSPITAL BOOKING SYSTEM 👋</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Enter username" required>
+        <input type="password" name="password" placeholder="Enter password" required>
+        <button>Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="/register/">Create one</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .navbar {
+            background: #0f172a;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+         .nav-links a {
+            color: #cbd5f5;
+            margin-left: 10px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }  */
+    </style>
+</head>
+<body>
+    <div class="navbar">
+    <div class="nav-links">
+        <a href="/dashboard/">Dashboard</a>
+        <!-- <a href="/search/">Doctors</a> -->
+        <!-- <a href="/history/">History</a> -->
+        <a href="/logout/">Logout</a>
+    </div>
+    </div>
+    {% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Welcome {{ request.user.username }}</h2>
+    <p>Quick Actions:</p>
+
+    <a href="/search/"><button>Book Now</button></a>
+    <a href="/history/"><button>View History</button></a>
+</div>
+{% endblock %}
+</body>
+</html>

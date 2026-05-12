@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Manage Availability 📅</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="date" name="date" required>
+        <input type="time" name="start_time" required>
+        <input type="time" name="end_time" required>
+        <button>Add Availability</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>Your Schedule</h3>
+
+    {% for slot in availability %}
+        <div class="card">
+            <p>{{ slot.date }} | {{ slot.start_time }} - {{ slot.end_time }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

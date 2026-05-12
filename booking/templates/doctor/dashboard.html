@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="navbar">
+    <div class="nav-links">
+        <a href="/dashboard/">Dashboard</a>
+        <!-- <a href="/search/">Doctors</a> -->
+        <!-- <a href="/history/">History</a> -->
+        <a href="/logout/">Logout</a>
+    </div>
+    </div>
+   {% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Doctor Dashboard 👨‍⚕️</h2>
+    <p>Welcome Dr. {{ request.user.username }}</p>
+</div>
+
+<!-- Stats -->
+<div class="grid">
+    <div class="card">
+        <h3>Total Appointments</h3>
+        <h1>{{ total }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Pending</h3>
+        <h1>{{ pending }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Completed</h3>
+        <h1>{{ completed }}</h1>
+    </div>
+</div>
+
+<!-- Actions -->
+<div class="card">
+    <h3>Quick Actions</h3>
+    <a href="/doctor-profile/"><button>Update Profile</button></a>
+    <a href="/availability/"><button>Manage Availability</button></a>
+</div>
+
+<!-- Appointments -->
+<div class="card">
+    <h3>Appointments</h3>
+
+    {% for appt in appointments %}
+        <div class="card">
+            <p><strong>Patient:</strong> {{ appt.patient }}</p>
+            <p><strong>Date:</strong> {{ appt.date }} {{ appt.time }}</p>
+
+            <span class="badge {{ appt.status }}">
+                {{ appt.status }}
+            </span>
+
+            <form method="POST" action="/update-status/{{ appt.id }}/">
+                {% csrf_token %}
+                <select name="status">
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+                <button>Update</button>
+            </form>
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %} 
+</body>
+</html>
