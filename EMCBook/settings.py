@@ -26,12 +26,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-l5c!*vrl@fdvha*du8h3nlwwi5^_&rb!@q$*@t8ki8__dgy-84'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'booking.User'
 # Application definition
+CSRF_TRUSTED_ORIGINS = [
+    "https://emcbook.onrender.com"
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',

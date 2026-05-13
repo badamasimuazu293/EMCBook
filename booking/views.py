@@ -1,27 +1,46 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404,
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+from django.contrib import messages,
 from .models import User, Doctor, Patient, Appointment, Availability
 from django.utils import timezone
+from django.http import HttpResponse
 # register view
+# def register_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         role = request.POST['role']
+
+#         user = User.objects.create_user(username=username, password=password, role=role)
+
+#         if role == 'patient':
+#             Patient.objects.create(user=user)
+#         elif role == 'doctor':
+#             Doctor.objects.create(user=user)
+
+#         messages.success(request, "Account created successfully")
+#         return redirect('login')
+
+#     return render(request, 'register.html')
+# # 
+import traceback
+
 def register_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        role = request.POST['role']
+    try:
+        if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
 
-        user = User.objects.create_user(username=username, password=password, role=role)
+            user = User.objects.create_user(
+                username=username,
+                password=password
+            )
 
-        if role == 'patient':
-            Patient.objects.create(user=user)
-        elif role == 'doctor':
-            Doctor.objects.create(user=user)
+            return redirect('login')
 
-        messages.success(request, "Account created successfully")
-        return redirect('login')
-
-    return render(request, 'register.html')
+    except Exception as e:
+        return HttpResponse(f"ERROR: {str(e)} <br><br> {traceback.format_exc()}")
 # login view
 def login_view(request):
     if request.method == 'POST':
