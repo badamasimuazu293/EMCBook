@@ -6,21 +6,58 @@ from .models import User, Doctor, Patient, Appointment, Availability
 from django.utils import timezone
 from django.http import HttpResponse
 # register view
+# def register_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         role = request.POST['role']
+
+#         user = User.objects.create_user(username=username, password=password, role=role)
+
+#         if role == 'patient':
+#             Patient.objects.create(user=user)
+#         elif role == 'doctor':
+#             Doctor.objects.create(user=user)
+
+#         messages.success(request, "Account created successfully")
+#         return redirect('login')
+
+#     return render(request, 'register.html')
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from .models import User, Patient, Doctor
+
 def register_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        role = request.POST['role']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        role = request.POST.get('role')
 
-        user = User.objects.create_user(username=username, password=password, role=role)
+        # ✅ Check if username already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists")
+            return redirect('register')
 
-        if role == 'patient':
-            Patient.objects.create(user=user)
-        elif role == 'doctor':
-            Doctor.objects.create(user=user)
+        try:
+            # ✅ Create user
+            user = User.objects.create_user(
+                username=username,
+                password=password,
+                role=role
+            )
 
-        messages.success(request, "Account created successfully")
-        return redirect('login')
+            # ✅ Create related profile
+            if role == 'patient':
+                Patient.objects.create(user=user)
+            elif role == 'doctor':
+                Doctor.objects.create(user=user)
+
+            messages.success(request, "Account created successfully")
+            return redirect('login')
+
+        except Exception as e:
+            messages.error(request, f"Error: {str(e)}")
+            return redirect('register')
 
     return render(request, 'register.html')
 # login view
