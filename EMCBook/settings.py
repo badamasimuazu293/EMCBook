@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-l5c!*vrl@fdvha*du8h3nlwwi5^_&rb!@q$*@t8ki8__dgy-84'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.onrender.com']
 
 AUTH_USER_MODEL = 'booking.User'
 # Application definition
