@@ -14,7 +14,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://emcbook.onrender.com"
 ]
 
-AUTH_USER_MODEL = 'booking.user'
+AUTH_USER_MODEL = 'booking.User'
 
 
 # Apps
